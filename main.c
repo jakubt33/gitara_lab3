@@ -4,7 +4,7 @@
 int main()
 {
     element *lista = NULL;
-
+srand(time(NULL));
     menu(lista);
 
     lista = usun(lista);

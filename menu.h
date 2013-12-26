@@ -120,14 +120,14 @@ void wyswietl(element *first)
             first = first->prior;
 
 
-        printf("-------------------------\n"
-               "Lp.\trocznik\tmarka\t\trodzaj\t\tkształt\n");
+        printf("--------------------------------------------------------------------\n"
+               "Lp.\trok\t\tmarka\trodzaj\t\tkształt\n");
         do
         {
-            printf("%d.\t%d\t%s\t\t", first->numer, first->rok_produkcji, first->marka);
-            if(first->rodzaj == 1)  printf("elektryczna\t");
-            else if(first->rodzaj == 2) printf("akustyczna\t");
-            else if(first->rodzaj == 3) printf("klasyczna\t");
+            printf("%4d.\t%d %16s\t", first->numer, first->rok_produkcji, first->marka);
+            if(first->rodzaj == 1)       printf("elektryczna\t");
+            else if(first->rodzaj == 2)  printf("akustyczna \t");
+            else if(first->rodzaj == 3)  printf("basowa     \t");
             printf("%s\n", first->budowa);
             first=first->next;
         }
