@@ -116,10 +116,19 @@ void wyswietl(element *first)
     }
     else
     {
+        while(first->prior != NULL)
+            first = first->prior;
+
+
+        printf("-------------------------\n"
+               "Lp.\trocznik\tmarka\t\trodzaj\t\tkształt\n");
         do
         {
-            printf("\n%d. marka gitary to: %s\t", first->numer, first->marka);
-            printf("rodzaj gitary to %s\n", first->budowa);
+            printf("%d.\t%d\t%s\t\t", first->numer, first->rok_produkcji, first->marka);
+            if(first->rodzaj == 1)  printf("elektryczna\t");
+            else if(first->rodzaj == 2) printf("akustyczna\t");
+            else if(first->rodzaj == 3) printf("klasyczna\t");
+            printf("%s\n", first->budowa);
             first=first->next;
         }
         while(first!=NULL);
