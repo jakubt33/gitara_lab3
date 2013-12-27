@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "init.h"
 #include "odczyt.h"
@@ -94,6 +95,7 @@ void menu(element *lista)
         }
     }
 }
+
 void podpis()
 {
     printf("\n--------------------\n"
@@ -131,6 +133,7 @@ void wyswietl(element *first)
         getchar();
     }
 }
+
 void zapisz1(element *lista)
 {
     int dzialaj = TAK;
@@ -158,7 +161,7 @@ void zapisz1(element *lista)
                 printf("zaczynam zapis...\n");
                 while(lista!=NULL)
                 {
-                    fprintf(pFile, "%s\n", lista->rodzaj);//ladnie zrobic
+                    fprintf(pFile, "%d\n", lista->rodzaj);//ladnie zrobic
 
                     fflush(pFile);
 
@@ -170,7 +173,6 @@ void zapisz1(element *lista)
         }
     }
 }
-
 
 #endif // MENU_H_INCLUDED
 

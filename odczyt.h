@@ -13,13 +13,14 @@ void zwolnij_tablice(element *);
 element *losuj(element *);
 element *usun_wybrany(element *);
 element * usun(element *);
-
+element *wczytaj_z_pliku(element *);
 
 void error()
 {
     while((getchar()) != '\n');
     printf("zła komenda\n");
 }
+
 element *losuj(element *lista)
 {
     int ilosc=0;
@@ -76,10 +77,10 @@ element *losuj(element *lista)
             numeruj(lista);
             ilosc--;
         }
-
-        return lista;
     }
+    return lista;
 }
+
 element *usun_wybrany(element *lista)
 {
     printf("\npodaj numer gitary którą chcesz usunąć:  ");
@@ -143,8 +144,11 @@ element *usun_wybrany(element *lista)
     }
     return lista; //zwraca wkaźnik do otatniego elementu
 }
+
 element *dodaj(element *lista)
 {
+    int dzialaj = NIE;
+
     element *temp=NULL;
     temp = (element*)malloc(sizeof(element));
 
@@ -179,16 +183,21 @@ element *dodaj(element *lista)
                     printf("\npoprawdnie dodano nową gitarę\n");
                     lista = push(lista, temp);
                     numeruj(lista);
-                    return lista;
+                    dzialaj = TAK;
                 }
             }
         }
     }
+    if (dzialaj == NIE)
+    {
+        free(temp);
+    }
+    return lista;
 }
 
-element *wczytaj_z_pliku()
+element *wczytaj_z_pliku(element *lista)
 {
-
+    return lista;
 }
 
 void numeruj(element *lista)
@@ -228,6 +237,7 @@ element *push(element *first, element *newone)
 
     return first; //zwraca wskaźnik do pierwszewgo elementu!!
 }
+
 element * usun(element *first)
 {
     if(first==NULL)
