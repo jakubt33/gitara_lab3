@@ -14,7 +14,6 @@
 
 void menu(element *lista);
 void podpis();
-element * usun(element *);
 void wyswietl(element *);
 void zapisz1(element *lista);
 void zapisz2(element * lista, int polecenie, char *);
@@ -31,6 +30,7 @@ void menu(element *lista)
                "11 - Wczytaj listę gitar z pliku\n"
                "12 - Dodaj ręcznie gitarę\n"
                "13 - Wygeneruj losową listę gitar\n"
+               "14 - Usuń wybraną pozycję\n"
                "-------------------\n"
                "2 - Wyswietl bazę gitar\n"
                "-------------------\n"
@@ -62,6 +62,11 @@ void menu(element *lista)
             case 13:
             {
                 lista = losuj(lista);
+                break;
+            }
+            case 14:
+            {
+                lista = usun_wybrany(lista);
                 break;
             }
             case 2:
@@ -96,18 +101,7 @@ void podpis()
            "programowanie w C\n"
            "--------------------\n");
 }
-element * usun(element *first)
-{
-    if(first==NULL)
-    {
-        printf("\nlista juz jest pusta\n");
-        return NULL;
-    }
 
-    usun(first->next);
-    free(first);
-    return NULL;
-}
 void wyswietl(element *first)
 {
     if(first==NULL)

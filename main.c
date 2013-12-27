@@ -3,8 +3,9 @@
 
 int main()
 {
+    srand(time(NULL));
     element *lista = NULL;
-srand(time(NULL));
+
     menu(lista);
 
     lista = usun(lista);

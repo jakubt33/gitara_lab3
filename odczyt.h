@@ -4,13 +4,15 @@
 #define STOP -1
 #define WORK 1
 
-element *dodaj(element *lista);
+element *dodaj(element *);
 void error();
 void nazwa_marki(element *, int *);
-void numeruj(element *, element *);
+void numeruj(element *);
 element *push(element *, element *);
-void zwolnij_tablice(element *temp);
-element *losuj(element *lista);
+void zwolnij_tablice(element *);
+element *losuj(element *);
+element *usun_wybrany(element *);
+element * usun(element *);
 
 
 void error()
@@ -32,6 +34,7 @@ element *losuj(element *lista)
         {
             element *temp=NULL;
             temp = (element*)malloc(sizeof(element));
+            temp->next = NULL;
             int zmienna = 0;
 
             //losowanie marki
@@ -44,7 +47,7 @@ element *losuj(element *lista)
             temp->rodzaj = zmienna;
 
             //losowanie roku produkcji
-            zmienna = rand()%50+1963;
+            zmienna = rand()%50+1964;
             temp->rok_produkcji = zmienna;
 
             //losowanie typu budowy
@@ -67,18 +70,79 @@ element *losuj(element *lista)
                 strncpy( temp->budowa, budowa[zmienna], MAXNAZWA-1);
             }
 
-            //dodanie numeru kolejności
-            numeruj(lista, temp);
-
             //dodanie do listy
             lista = push(lista, temp);
 
+            numeruj(lista);
             ilosc--;
         }
+
         return lista;
     }
 }
+element *usun_wybrany(element *lista)
+{
+    printf("\npodaj numer gitary którą chcesz usunąć:  ");
+    int do_usuniecia=0;
+    if ( scanf("%d", &do_usuniecia) != 1 )
+    {
+        error();
+    }
+    else
+    {
+        printf("numer na wejciu to %d\n", lista->numer);
+        if(lista->numer>do_usuniecia)
+            while(do_usuniecia != lista->numer && lista->prior != NULL)
+                lista = lista->prior;
 
+        else if(lista->numer<do_usuniecia)
+            while(do_usuniecia != lista->numer && lista->next != NULL)
+                lista = lista->next;
+
+        if(lista->numer == do_usuniecia)
+        {
+            if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme
+            {
+                lista->prior->next = lista->next;
+                lista->next->prior = lista->prior;
+
+                lista->next = NULL;     //
+                lista->prior = NULL;    //palenie mostow
+                free(lista);
+            }
+            else if(lista->prior == NULL && lista->next != NULL) //pierwsza
+            {
+                lista = lista->next; //do przodu o jeden
+                lista->prior->next = NULL; //pierwszy juz nie wskazuje na drugi
+                free(lista->prior); //usuniecie pierwszego
+                lista->prior = NULL; //nowy pierwszy wskazuje na null w prior
+
+            }
+            else if(lista->prior != NULL && lista->next == NULL) //ostatnia
+            {
+                lista = lista->prior; //cofam ie ojednen
+                lista->next->prior = NULL; //pozbycie sie swiadkow, alienacja ostatniego elementu
+                free(lista->next);
+                lista->next = NULL;
+            }
+            else if(lista->prior == NULL && lista->next == NULL) //w bazie tylko jeden rekord
+            {
+                lista = usun(lista);
+            }
+            numeruj(lista);
+
+        }
+        else
+            printf("brak gitary o wkazanym numerze\n");
+
+        if(lista!=NULL)
+        {
+            while(lista->next != NULL)
+                lista = lista->next;
+        }
+    }
+    return lista; //zwraca wkaźnik do otatniego elementu
+}
 element *dodaj(element *lista)
 {
     element *temp=NULL;
@@ -113,8 +177,8 @@ element *dodaj(element *lista)
                 else
                 {
                     printf("\npoprawdnie dodano nową gitarę\n");
-                    numeruj(lista, temp);
                     lista = push(lista, temp);
+                    numeruj(lista);
                     return lista;
                 }
             }
@@ -127,14 +191,21 @@ element *wczytaj_z_pliku()
 
 }
 
-
-void numeruj(element *lista, element *temp)
+void numeruj(element *lista)
 {
-    if(lista == NULL)
-        temp->numer = 1;
-    else
-        temp->numer = lista->numer + 1;
-
+    int licznik=0;
+    if(lista!=NULL)
+    {
+        while(lista->prior != NULL) //cofniecie sie na poczatek lissty
+            lista = lista->prior;
+        do
+        {
+            licznik++;
+            lista->numer=licznik;
+            lista=lista->next;
+        }
+        while(lista!=NULL);
+    }
 }
 
 element *push(element *first, element *newone)
@@ -149,13 +220,25 @@ element *push(element *first, element *newone)
 
     while(temp->next!=NULL)
     {
-        temp->prior = temp;
+        temp->next->prior = temp;
         temp = temp->next;
     }
     newone->prior = temp;
     temp->next=newone;
 
-    return newone; //zwraca wskaźnik do ostatniego elementu!!
+    return first; //zwraca wskaźnik do pierwszewgo elementu!!
+}
+element * usun(element *first)
+{
+    if(first==NULL)
+    {
+        printf("\nlista juz jest pusta\n");
+        return NULL;
+    }
+
+    usun(first->next);
+    free(first);
+    return NULL;
 }
 
 

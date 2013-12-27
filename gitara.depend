@@ -3,7 +3,7 @@
 	<stdio.h>
 	"menu.h"
 
-1388089179 /home/kuba/github/gitara_lab3/menu.h
+1388151928 /home/kuba/github/gitara_lab3/menu.h
 	<stdlib.h>
 	<string.h>
 	"init.h"
@@ -11,5 +11,5 @@
 
 1388086979 /home/kuba/github/gitara_lab3/init.h
 
-1388089136 /home/kuba/github/gitara_lab3/odczyt.h
+1388152343 /home/kuba/github/gitara_lab3/odczyt.h
 
