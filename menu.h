@@ -78,7 +78,7 @@ void menu(element *lista)
             case 5:
             {
                 printf("zapis\n");
-                zapisz1(lista);
+                zapisz_do_pliku(lista);
                 break;
             }
             case 6:
@@ -134,45 +134,6 @@ void wyswietl(element *first)
     }
 }
 
-void zapisz1(element *lista)
-{
-    int dzialaj = TAK;
-    printf("podaj nazwę pod jaką zapisac tą listę:\n");
-    char nazwa[MAXNAZWA];
-    if ( scanf("%19s", nazwa) != 1 )
-    {
-        error();
-        dzialaj = NIE;
-    }
-    else
-    {
-        FILE *pFile;
-
-        if(dzialaj == TAK)
-        {
-            pFile = fopen( nazwa , "wat");
-
-            if(pFile==NULL)
-            {
-                perror("blad otwarcia pliku");
-            }
-            else
-            {
-                printf("zaczynam zapis...\n");
-                while(lista!=NULL)
-                {
-                    fprintf(pFile, "%d\n", lista->rodzaj);//ladnie zrobic
-
-                    fflush(pFile);
-
-                    lista=lista->next;
-                }
-                fclose(pFile);
-
-            }
-        }
-    }
-}
 
 #endif // MENU_H_INCLUDED
 

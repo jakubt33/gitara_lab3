@@ -5,6 +5,7 @@
 #define WORK 1
 
 element *dodaj(element *);
+void zapisz_do_pliku(element* );
 void error();
 void nazwa_marki(element *, int *);
 void numeruj(element *);
@@ -12,7 +13,7 @@ element *push(element *, element *);
 void zwolnij_tablice(element *);
 element *losuj(element *);
 element *usun_wybrany(element *);
-element * usun(element *);
+element *usun(element *);
 element *wczytaj_z_pliku(element *);
 
 void error()
@@ -195,11 +196,6 @@ element *dodaj(element *lista)
     return lista;
 }
 
-element *wczytaj_z_pliku(element *lista)
-{
-    return lista;
-}
-
 void numeruj(element *lista)
 {
     int licznik=0;
@@ -251,5 +247,84 @@ element * usun(element *first)
     return NULL;
 }
 
+void zapisz_do_pliku(element *lista)
+{
+    if(lista != NULL)
+    {
+        char nazwa[MAXNAZWA];
+        printf("\npodaj nazwę pliku z rozszerzeniem .dat:  ");
+        if ( scanf("%s", nazwa) != 1 )
+        {
+            error();
+        }
+        else
+        {
+            FILE *pFile;
+            pFile=fopen(nazwa, "wb");
+            if(pFile == NULL)
+            {
+                perror("\nbłąd otwarcia pliku\n");
+            }
+            else
+            {
+                while(lista != NULL)
+                {
+                    fwrite(&lista->rok_produkcji, sizeof(int), 1 , pFile );
+                    fwrite(&lista->rodzaj, sizeof(int), 1 , pFile );
+                    fwrite(lista->marka, MAXNAZWA*sizeof(char), 1,  pFile);
+                    fwrite(lista->budowa, MAXNAZWA*sizeof(char), 1,  pFile);
+                    fflush(pFile);
+                    lista = lista->next;
+                }
+                printf("poprawnie zapisano listę\n");
+                fclose(pFile);
+            }
+        }
+    }
+}
+element * wczytaj_z_pliku(element *lista)
+{
+    char nazwa[MAXNAZWA];
+    printf("\npodaj nazwę pliku z rozszerzeniem .dat:  ");
+    if ( scanf("%s", nazwa) != 1 )
+    {
+        error();
+    }
+    else
+    {
+        FILE *pFile;
+        pFile=fopen(nazwa, "rb");
+        if(pFile == NULL)
+        {
+            perror("\nbłąd otwarcia pliku\n");
+        }
+        else
+        {
+            while(feof(pFile) == 0)
+            {
+                element *temp = NULL;
+                temp=(element*)malloc(sizeof(element));
+                int read_counter=0;
+                read_counter += fread(&temp->rok_produkcji, sizeof(int), 1, pFile);
+                if(temp->rok_produkcji == 0) free(temp); //znak ze koniec pliku
+                else
+                {
+                    read_counter += fread(&temp->rodzaj, sizeof(int), 1, pFile);
+                    read_counter += fread(temp->marka, MAXNAZWA*sizeof(char), 1, pFile);
+                    read_counter += fread(temp->budowa, MAXNAZWA*sizeof(char), 1, pFile);
+                    if (read_counter == 4 )
+                        {
+                            lista = push(lista, temp);
+                            numeruj(lista);
+                        }
+                }
+            }
+            printf("poprawnie wczytano listę\n");
+            fclose(pFile);
+        }
+
+    }
+    return lista;
+}
 
 #endif // ODCZYT_H_INCLUDED
