@@ -10,6 +10,7 @@
 
 #include "init.h"
 #include "odczyt.h"
+#include "edycja.h"
 
 
 
@@ -73,6 +74,11 @@ void menu(element *lista)
             case 2:
             {
                 wyswietl(lista);
+                break;
+            }
+            case 31:
+            {
+                sortuj(lista);
                 break;
             }
             case 5:
