@@ -41,32 +41,33 @@ void sortuj_rocznik(element *lista)
     int czy_posortowane = NIE;
     while(lista->prior != NULL)
         lista = lista->prior; //cofniecie sie na począstek listy
-    lista = lista->next; //o jeden do przodu
 
     while(czy_posortowane == NIE)
     {
         int licznik = 0;
-        while(lista->next != NULL && lista->next->next != NULL)
+        while(lista->next != NULL)
         {
             if(lista->rok_produkcji > lista->next->rok_produkcji )
-                {
-                    element *temp = NULL;
-                    temp = lista->prior;
-                    lista->prior = lista->next;
-                    lista->next = lista->next->next;
+            {
+                element *temp = NULL;
+                temp = lista->prior;
+                lista->prior = lista->next;
+                lista->next = lista->next->next;
+                if(lista->next != NULL)
                     lista->next->prior = lista;
 
-                    lista->prior->next = lista;
-                    lista->prior->prior = temp;
+                lista->prior->next = lista;
+                lista->prior->prior = temp;
+                if(lista->prior->prior != NULL)
                     lista->prior->prior->next = lista->prior;
-                    licznik++;
-                }
+                licznik++;
+            }
+            if(lista->next != NULL)
                 lista = lista->next;
         }
 
-    while(lista->prior != NULL)
-        lista = lista->prior; //cofniecie sie na począstek listy
- lista = lista->next; //o jeden do przodu
+        while(lista->prior != NULL)
+            lista = lista->prior; //cofniecie sie na począstek listy
 
         if(licznik == 0)
             czy_posortowane = TAK;
