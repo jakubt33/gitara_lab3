@@ -9,16 +9,15 @@
 #include <time.h>
 
 #include "init.h"
-#include "odczyt.h"
-#include "edycja.h"
-
-
 
 void menu(element *lista);
 void podpis();
 void wyswietl(element *);
 void zapisz1(element *lista);
 void zapisz2(element * lista, int polecenie, char *);
+
+#include "odczyt.h"
+#include "edycja.h"
 
 
 
@@ -79,6 +78,11 @@ void menu(element *lista)
             case 31:
             {
                 sortuj(lista);
+                break;
+            }
+            case 41:
+            {
+                szukaj(lista);
                 break;
             }
             case 5:

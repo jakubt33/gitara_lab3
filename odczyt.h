@@ -252,13 +252,14 @@ void zapisz_do_pliku(element *lista)
     if(lista != NULL)
     {
         char nazwa[MAXNAZWA];
-        printf("\npodaj nazwę pliku z rozszerzeniem .dat:  ");
+        printf("\npodaj nazwę pliku:  ");
         if ( scanf("%s", nazwa) != 1 )
         {
             error();
         }
         else
         {
+            //sprawdzenie czy .dat dodac
             FILE *pFile;
             pFile=fopen(nazwa, "wb");
             if(pFile == NULL)
@@ -285,7 +286,7 @@ void zapisz_do_pliku(element *lista)
 element * wczytaj_z_pliku(element *lista)
 {
     char nazwa[MAXNAZWA];
-    printf("\npodaj nazwę pliku z rozszerzeniem .dat:  ");
+    printf("\npodaj nazwę pliku:  ");
     if ( scanf("%s", nazwa) != 1 )
     {
         error();
