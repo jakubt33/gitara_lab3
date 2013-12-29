@@ -54,6 +54,7 @@ void menu(element *lista)
             case 11:
             {
                 lista = wczytaj_z_pliku(lista);
+                numeruj(lista);
                 break;
             }
             case 12:

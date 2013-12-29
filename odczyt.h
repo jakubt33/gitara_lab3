@@ -1,8 +1,6 @@
 #ifndef ODCZYT_H_INCLUDED
 #define ODCZYT_H_INCLUDED
 
-#define STOP -1
-#define WORK 1
 
 element *dodaj(element *);
 void zapisz_do_pliku(element* );
@@ -358,20 +356,23 @@ void zapisz_do_pliku(element *lista)
             }
             else
             {
+                while(lista->prior != NULL)
+                    lista = lista->prior; //cofanie na sam początek w razie co
                 while(lista != NULL)
                 {
                     fwrite(&lista->rok_produkcji, sizeof(int), 1 , pFile );
                     fwrite(&lista->rodzaj, sizeof(int), 1 , pFile );
                     fwrite(lista->marka, MAXNAZWA*sizeof(char), 1,  pFile);
                     fwrite(lista->budowa, MAXNAZWA*sizeof(char), 1,  pFile);
-                    fflush(pFile);
                     lista = lista->next;
                 }
                 printf("poprawnie zapisano listę\n");
+
                 fclose(pFile);
             }
         }
     }
+    else printf("lista jest pusta\n");
 }
 element * wczytaj_z_pliku(element *lista)
 {
@@ -392,11 +393,13 @@ element * wczytaj_z_pliku(element *lista)
         }
         else
         {
-            while(feof(pFile) == 0)
+            int czy_dzialac = TAK;
+            while(feof(pFile) == 0 && czy_dzialac == TAK)
             {
                 element *temp = NULL;
                 temp=(element*)malloc(sizeof(element));
                 int read_counter=0;
+
                 read_counter += fread(&temp->rok_produkcji, sizeof(int), 1, pFile);
                 if(temp->rok_produkcji == 0) free(temp); //znak ze koniec pliku
                 else
@@ -408,16 +411,19 @@ element * wczytaj_z_pliku(element *lista)
                     {
                         temp->prior = NULL;
                         temp->next = NULL;
-                        //wyswietl(temp);
                         lista = push(lista, temp);
-                        numeruj(lista);
+                    }
+                    else
+                    {
+                        printf("problem z wczytaniem bazy\n");
+                        czy_dzialac = NIE;
                     }
                 }
             }
-            printf("poprawnie wczytano listę\n");
+            if(czy_dzialac == TAK)
+                printf("poprawnie wczytano listę\n");
             fclose(pFile);
         }
-
     }
     return lista;
 }
