@@ -32,12 +32,13 @@ void menu(element *lista)
                "12 - Dodaj ręcznie gitarę\n"
                "13 - Wygeneruj losową listę gitar\n"
                "14 - Usuń wybraną pozycję\n"
+               "15 - Edytuj wybraną pozycję\n"
                "-------------------\n"
                "2 - Wyswietl bazę gitar\n"
                "-------------------\n"
                "31 - Sortuj po ...\n"
                "-------------------\n"
-               "41 - Filtruj po ...\n"
+               "41 - Wyszukaj ...\n"
                "-------------------\n"
                "5 - Zapisz\n"
                "6 - Wyjdź\n");
@@ -68,6 +69,11 @@ void menu(element *lista)
             case 14:
             {
                 lista = usun_wybrany(lista);
+                break;
+            }
+            case 15:
+            {
+                lista = edytuj(lista);
                 break;
             }
             case 2:

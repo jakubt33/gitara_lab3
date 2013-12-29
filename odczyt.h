@@ -84,7 +84,9 @@ element *losuj(element *lista)
 
 element *usun_wybrany(element *lista)
 {
-    printf("\npodaj numer gitary którą chcesz usunąć:  ");
+    if(lista !=NULL)
+    {
+        printf("\npodaj numer gitary którą chcesz usunąć:  ");
     int do_usuniecia=0;
     if ( scanf("%d", &do_usuniecia) != 1 )
     {
@@ -92,7 +94,7 @@ element *usun_wybrany(element *lista)
     }
     else
     {
-        printf("numer na wejciu to %d\n", lista->numer);
+        //printf("numer na wejciu to %d\n", lista->numer);
         if(lista->numer>do_usuniecia)
             while(do_usuniecia != lista->numer && lista->prior != NULL)
                 lista = lista->prior;
@@ -103,14 +105,18 @@ element *usun_wybrany(element *lista)
 
         if(lista->numer == do_usuniecia)
         {
-            if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme
+            if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme  do poptawy
             {
-                lista->prior->next = lista->next;
-                lista->next->prior = lista->prior;
+                element *temp = lista->prior;
 
-                lista->next = NULL;     //
-                lista->prior = NULL;    //palenie mostow
-                free(lista);
+                lista = lista->next;
+
+                free(lista->prior);
+
+                lista->prior = temp; //o jeden do tylu
+                temp->next = lista;
+
+
             }
             else if(lista->prior == NULL && lista->next != NULL) //pierwsza
             {
@@ -142,6 +148,7 @@ element *usun_wybrany(element *lista)
             while(lista->next != NULL)
                 lista = lista->next;
         }
+    }
     }
     return lista; //zwraca wkaźnik do otatniego elementu
 }
