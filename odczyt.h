@@ -7,15 +7,13 @@
 element *dodaj(element *);
 void zapisz_do_pliku(element* );
 void error();
-void nazwa_marki(element *, int *);
 void numeruj(element *);
 element *push(element *, element *);
-void zwolnij_tablice(element *);
 element *losuj(element *);
 element *usun_wybrany(element *);
 element *usun(element *);
 element *wczytaj_z_pliku(element *);
-
+element *edytuj(element*);
 
 element *edytuj(element* lista)
 {
@@ -188,7 +186,7 @@ element *usun_wybrany(element *lista)
 
             if(lista->numer == do_usuniecia)
             {
-                if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme  do poptawy
+                if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme
                 {
                     element *temp = lista->prior;
 
@@ -323,7 +321,7 @@ element *push(element *first, element *newone)
     newone->prior = temp;
     temp->next=newone;
 
-    return first; //zwraca wskaźnik do pierwszewgo elementu!!
+    return first; //zwraca wskaźnik do ostatniego elementu!!
 }
 
 element * usun(element *first)
@@ -344,14 +342,14 @@ void zapisz_do_pliku(element *lista)
     if(lista != NULL)
     {
         char nazwa[MAXNAZWA];
-        printf("\npodaj nazwę pliku:  ");
-        if ( scanf("%s", nazwa) != 1 )
+        printf("\npodaj nazwę pliku(bez rozszerzenia):  ");
+        if ( scanf("%16s", nazwa) != 1 )
         {
             error();
         }
         else
         {
-            //sprawdzenie czy .dat dodac
+            strcat(nazwa, ".jt");
             FILE *pFile;
             pFile=fopen(nazwa, "wb");
             if(pFile == NULL)
@@ -378,14 +376,15 @@ void zapisz_do_pliku(element *lista)
 element * wczytaj_z_pliku(element *lista)
 {
     char nazwa[MAXNAZWA];
-    printf("\npodaj nazwę pliku:  ");
-    if ( scanf("%s", nazwa) != 1 )
+    printf("\npodaj nazwę pliku(bez rozszerzenia):  ");
+    if ( scanf("%16s", nazwa) != 1 )
     {
         error();
     }
     else
     {
         FILE *pFile;
+        strcat(nazwa, ".jt");
         pFile=fopen(nazwa, "rb");
         if(pFile == NULL)
         {
@@ -407,6 +406,9 @@ element * wczytaj_z_pliku(element *lista)
                     read_counter += fread(temp->budowa, MAXNAZWA*sizeof(char), 1, pFile);
                     if (read_counter == 4 )
                     {
+                        temp->prior = NULL;
+                        temp->next = NULL;
+                        //wyswietl(temp);
                         lista = push(lista, temp);
                         numeruj(lista);
                     }

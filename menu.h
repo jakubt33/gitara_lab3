@@ -88,7 +88,11 @@ void menu(element *lista)
             }
             case 41:
             {
-                szukaj(lista);
+                element *szukaj_lista=NULL;
+                szukaj_lista = szukaj(lista, szukaj_lista);
+                szukaj_lista = usun(szukaj_lista);
+                //numeruj(lista);
+
                 break;
             }
             case 5:
