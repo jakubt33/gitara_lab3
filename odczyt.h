@@ -16,6 +16,89 @@ element *usun_wybrany(element *);
 element *usun(element *);
 element *wczytaj_z_pliku(element *);
 
+
+element *edytuj(element* lista)
+{
+    if(lista !=NULL)
+    {
+        printf("\npodaj numer gitary którą chcesz edytować:  ");
+        int do_edycji=0;
+        if ( scanf("%d", &do_edycji) != 1 )
+        {
+            error();
+        }
+        else
+        {
+            if(lista->numer>do_edycji)
+                while(do_edycji != lista->numer && lista->prior != NULL)
+                    lista = lista->prior;
+
+            else if(lista->numer<do_edycji)
+                while(do_edycji != lista->numer && lista->next != NULL)
+                    lista = lista->next;
+
+            if(lista->numer == do_edycji)
+            {
+                int temp_rok_produkcji=0;
+                int temp_rodzaj=0; //1-elektryk, 2 akustyk, 3- bas
+                char temp_marka[MAXNAZWA];
+                char temp_budowa[MAXNAZWA];
+
+                printf("\npodaj markę gitary do załadowania do bazy (%s):  ", lista->marka);
+                if ( scanf("%19s", temp_marka) != 1 )
+                {
+                    error();
+                }
+                else
+                {
+                    printf("\nrodzaj gitary: 1-elektryczna, 2-akustyczna, 3-basowa(%d):  ", lista->rodzaj);
+                    if ( scanf("%d", &temp_rodzaj) != 1 )
+                    {
+                        error();
+                    }
+                    else if ( temp_rodzaj == 1  || temp_rodzaj == 2  || temp_rodzaj == 3 )
+                    {
+                        printf("\npodaj rok produkcji(%d):  ", lista->rok_produkcji);
+                        if ( scanf("%d", &temp_rok_produkcji) != 1 )
+                        {
+                            error();
+                        }
+                        else if(temp_rok_produkcji > 1800)
+                        {
+                            printf("\npodaj budowę gitary(%s):  ", lista->budowa);
+                            if ( scanf("%19s", temp_budowa) != 1 )
+                            {
+                                error();
+                            }
+                            else
+                            {
+                                printf("\npoprawdnie edytowano gitarę\n");
+
+                                strcpy ( lista->marka, temp_marka);
+                                strcpy ( lista->budowa, temp_budowa);
+                                lista->rodzaj = temp_rodzaj;
+                                lista->rok_produkcji = temp_rok_produkcji;
+                            }
+                        }
+                        else printf("złe dane\n");
+                    }
+                    else printf("złe dane\n");
+                }
+            }
+            else
+                printf("brak gitary o wkazanym numerze\n");
+
+            while(lista->next != NULL)
+                lista = lista->next;
+
+        }
+    }
+    else
+    {
+        printf("lista jest pusta\n");
+    }
+    return lista; //zwraca wkaźnik do otatniego elementu
+}
 void error()
 {
     while((getchar()) != '\n');
@@ -87,68 +170,68 @@ element *usun_wybrany(element *lista)
     if(lista !=NULL)
     {
         printf("\npodaj numer gitary którą chcesz usunąć:  ");
-    int do_usuniecia=0;
-    if ( scanf("%d", &do_usuniecia) != 1 )
-    {
-        error();
-    }
-    else
-    {
-        //printf("numer na wejciu to %d\n", lista->numer);
-        if(lista->numer>do_usuniecia)
-            while(do_usuniecia != lista->numer && lista->prior != NULL)
-                lista = lista->prior;
-
-        else if(lista->numer<do_usuniecia)
-            while(do_usuniecia != lista->numer && lista->next != NULL)
-                lista = lista->next;
-
-        if(lista->numer == do_usuniecia)
+        int do_usuniecia=0;
+        if ( scanf("%d", &do_usuniecia) != 1 )
         {
-            if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme  do poptawy
-            {
-                element *temp = lista->prior;
-
-                lista = lista->next;
-
-                free(lista->prior);
-
-                lista->prior = temp; //o jeden do tylu
-                temp->next = lista;
-
-
-            }
-            else if(lista->prior == NULL && lista->next != NULL) //pierwsza
-            {
-                lista = lista->next; //do przodu o jeden
-                lista->prior->next = NULL; //pierwszy juz nie wskazuje na drugi
-                free(lista->prior); //usuniecie pierwszego
-                lista->prior = NULL; //nowy pierwszy wskazuje na null w prior
-
-            }
-            else if(lista->prior != NULL && lista->next == NULL) //ostatnia
-            {
-                lista = lista->prior; //cofam ie ojednen
-                lista->next->prior = NULL; //pozbycie sie swiadkow, alienacja ostatniego elementu
-                free(lista->next);
-                lista->next = NULL;
-            }
-            else if(lista->prior == NULL && lista->next == NULL) //w bazie tylko jeden rekord
-            {
-                lista = usun(lista);
-            }
-            numeruj(lista);
-
+            error();
         }
         else
-            printf("brak gitary o wkazanym numerze\n");
-
-        if(lista!=NULL)
         {
-            while(lista->next != NULL)
-                lista = lista->next;
+            //printf("numer na wejciu to %d\n", lista->numer);
+            if(lista->numer>do_usuniecia)
+                while(do_usuniecia != lista->numer && lista->prior != NULL)
+                    lista = lista->prior;
+
+            else if(lista->numer<do_usuniecia)
+                while(do_usuniecia != lista->numer && lista->next != NULL)
+                    lista = lista->next;
+
+            if(lista->numer == do_usuniecia)
+            {
+                if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme  do poptawy
+                {
+                    element *temp = lista->prior;
+
+                    lista = lista->next;
+
+                    free(lista->prior);
+
+                    lista->prior = temp; //o jeden do tylu
+                    temp->next = lista;
+
+
+                }
+                else if(lista->prior == NULL && lista->next != NULL) //pierwsza
+                {
+                    lista = lista->next; //do przodu o jeden
+                    lista->prior->next = NULL; //pierwszy juz nie wskazuje na drugi
+                    free(lista->prior); //usuniecie pierwszego
+                    lista->prior = NULL; //nowy pierwszy wskazuje na null w prior
+
+                }
+                else if(lista->prior != NULL && lista->next == NULL) //ostatnia
+                {
+                    lista = lista->prior; //cofam ie ojednen
+                    lista->next->prior = NULL; //pozbycie sie swiadkow, alienacja ostatniego elementu
+                    free(lista->next);
+                    lista->next = NULL;
+                }
+                else if(lista->prior == NULL && lista->next == NULL) //w bazie tylko jeden rekord
+                {
+                    lista = usun(lista);
+                }
+                numeruj(lista);
+
+            }
+            else
+                printf("brak gitary o wkazanym numerze\n");
+
+            if(lista!=NULL)
+            {
+                while(lista->next != NULL)
+                    lista = lista->next;
+            }
         }
-    }
     }
     return lista; //zwraca wkaźnik do otatniego elementu
 }
@@ -167,19 +250,19 @@ element *dodaj(element *lista)
     }
     else
     {
-        printf("\nrodzaj gitary: 1-elektryczna, 2-akustyczna, 3-klasyczna:  ");
+        printf("\nrodzaj gitary: 1-elektryczna, 2-akustyczna, 3-basowa:  ");
         if ( scanf("%d", &temp->rodzaj) != 1 )
         {
             error();
         }
-        else
+        else if ( temp->rodzaj == 1  || temp->rodzaj == 2  ||temp->rodzaj == 3  )
         {
             printf("\npodaj rok produkcji:  ");
             if ( scanf("%d", &temp->rok_produkcji) != 1 )
             {
                 error();
             }
-            else
+            else if (temp->rok_produkcji > 1800)
             {
                 printf("\npodaj kształt gitary:  ");
                 if ( scanf("%19s", temp->budowa) != 1 )
@@ -194,7 +277,9 @@ element *dodaj(element *lista)
                     dzialaj = TAK;
                 }
             }
+            else printf("złe dane\n");
         }
+        else printf("złe dane\n");
     }
     if (dzialaj == NIE)
     {
@@ -321,10 +406,10 @@ element * wczytaj_z_pliku(element *lista)
                     read_counter += fread(temp->marka, MAXNAZWA*sizeof(char), 1, pFile);
                     read_counter += fread(temp->budowa, MAXNAZWA*sizeof(char), 1, pFile);
                     if (read_counter == 4 )
-                        {
-                            lista = push(lista, temp);
-                            numeruj(lista);
-                        }
+                    {
+                        lista = push(lista, temp);
+                        numeruj(lista);
+                    }
                 }
             }
             printf("poprawnie wczytano listę\n");
@@ -336,3 +421,4 @@ element * wczytaj_z_pliku(element *lista)
 }
 
 #endif // ODCZYT_H_INCLUDED
+
