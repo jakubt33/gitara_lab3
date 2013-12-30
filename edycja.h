@@ -6,9 +6,74 @@ void sortuj_rocznik(element*);
 void sortuj_rodzaj(element*);
 void sortuj_marka(element*);
 void sortuj_budowa(element *);
-element * szukaj(element *, element*);
+element * szukaj_marka(element *, element*);
+element * szukaj_budowa(element *, element*);
 
-element * szukaj(element *lista, element *szukaj_lista) //sprawdzic zabezpieczina
+element * szukaj_budowa(element *lista, element *szukaj_lista) //sprawdzic zabezpieczina
+{
+    if(lista != NULL)
+    {
+        while(lista->prior != NULL)
+            lista = lista->prior;
+
+        printf("\nwpisz poszukiwaną frazę(w budowie):");
+        char nazwa[MAXNAZWA];
+        if ( scanf("%s", nazwa) != 1 )
+        {
+            error();
+        }
+        else
+        {
+            printf("po wyjściu z tej opcji wyszukane rekordy zostaną usunięte z tymczasowego bufora\n");
+            char temp_nazwa[strlen(nazwa)+1];
+            int koniec = NIE;
+            while(koniec == NIE) //dla kazdego elementu z listy
+            {
+                if(strlen(nazwa)<=strlen(lista->budowa))
+                {
+                    int licznik_1=0;
+                    for(licznik_1=0; licznik_1<(strlen(lista->budowa)-strlen(nazwa)+1); licznik_1++) //dla kadego mozliwego miejsca w nazwie marki szukaengo fragmentu
+                    {
+                        int t_licznik=0, licznik=0;
+                        for(licznik=licznik_1; licznik<strlen(nazwa)+licznik_1; licznik++ ) //kopiowanie fragmentu do tempa
+                        {
+                            temp_nazwa[t_licznik] = lista->budowa[licznik];
+                            t_licznik++;
+                        }
+                        temp_nazwa[strlen(nazwa)] = '\0';
+                        //printf("temp nazwa to %s\n", temp_nazwa); fajne do debugowania lub patrzenia jak zarąbiscie dziala ;D
+
+                        if(strcmp(temp_nazwa, nazwa) == 0)
+                        {
+                            element *temp = NULL;
+                            temp = (element*)malloc(sizeof(element));
+
+                            temp->rodzaj = lista->rodzaj;
+                            temp->rok_produkcji = lista->rok_produkcji;
+                            temp->numer = lista->numer;
+                            strncpy( temp->budowa, lista->budowa, MAXNAZWA-1);
+                            strncpy( temp->marka, lista->marka, MAXNAZWA-1);
+                            temp->next = NULL;
+                            temp->prior = NULL;
+                            szukaj_lista = push(szukaj_lista, temp);
+                            //printf("pasue\n"); fajne do debugowaina ;D
+                        }
+
+                    }
+                }
+                if(lista->next == NULL)
+                    koniec = TAK;
+                else
+                    lista = lista->next;
+            }
+            wyswietl(szukaj_lista);
+
+        }
+
+    }
+    return szukaj_lista;
+}
+element * szukaj_marka(element *lista, element *szukaj_lista) //sprawdzic zabezpieczina
 {
     if(lista != NULL)
     {
@@ -72,7 +137,6 @@ element * szukaj(element *lista, element *szukaj_lista) //sprawdzic zabezpieczin
     }
     return szukaj_lista;
 }
-
 void sortuj(element *lista)
 {
     if(lista != NULL)

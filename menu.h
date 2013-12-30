@@ -38,7 +38,8 @@ void menu(element *lista)
                "-------------------\n"
                "31 - Sortuj po ...\n"
                "-------------------\n"
-               "41 - Wyszukaj ...\n"
+               "41 - Wyszukaj w nazwie marki\n"
+               "42 - Wyszukaj w rodzaju budowy\n"
                "-------------------\n"
                "5 - Zapisz\n"
                "6 - Wyjdź\n");
@@ -90,10 +91,15 @@ void menu(element *lista)
             case 41:
             {
                 element *szukaj_lista=NULL;
-                szukaj_lista = szukaj(lista, szukaj_lista);
+                szukaj_lista = szukaj_marka(lista, szukaj_lista);
                 szukaj_lista = usun(szukaj_lista);
-                //numeruj(lista);
-
+                break;
+            }
+            case 42:
+            {
+                element *szukaj_lista=NULL;
+                szukaj_lista = szukaj_budowa(lista, szukaj_lista);
+                szukaj_lista = usun(szukaj_lista);
                 break;
             }
             case 5:

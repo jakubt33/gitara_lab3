@@ -173,8 +173,6 @@ element *usun_wybrany(element *lista)
         }
         else
         {
-
-            //printf("numer na wejciu to %d\n", lista->numer);
             if(lista->numer>do_usuniecia)
                 while(do_usuniecia != lista->numer && lista->prior != NULL)
                     lista = lista->prior;
@@ -201,8 +199,6 @@ element *usun_wybrany(element *lista)
                 }
                 else if(tak_nie == 1)
                 {
-
-
                     if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme
                     {
                         element *temp = lista->prior;
@@ -236,8 +232,6 @@ element *usun_wybrany(element *lista)
                         lista = usun(lista);
                     }
                     numeruj(lista);
-
-
 
                 }
                 else printf("powrót do menu głównego\n");
