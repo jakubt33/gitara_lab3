@@ -3,15 +3,67 @@
 
 
 element *dodaj(element *);
-void zapisz_do_pliku(element* );
+element *edytuj(element*);
 void error();
+element *losuj(element *);
 void numeruj(element *);
 element *push(element *, element *);
-element *losuj(element *);
-element *usun_wybrany(element *);
 element *usun(element *);
+element *usun_wybrany(element *);
 element *wczytaj_z_pliku(element *);
-element *edytuj(element*);
+void zapisz_do_pliku(element* );
+
+element *dodaj(element *lista)
+{
+    int dzialaj = NIE;
+
+    element *temp=NULL;
+    temp = (element*)malloc(sizeof(element));
+
+    printf("\npodaj markę gitary do załadowania do bazy:  ");
+    if ( scanf("%19s", temp->marka) != 1 )
+    {
+        error();
+    }
+    else
+    {
+        printf("\nrodzaj gitary: 1-elektryczna, 2-akustyczna, 3-basowa:  ");
+        if ( scanf("%d", &temp->rodzaj) != 1 )
+        {
+            error();
+        }
+        else if ( temp->rodzaj == 1  || temp->rodzaj == 2  ||temp->rodzaj == 3  )
+        {
+            printf("\npodaj rok produkcji:  ");
+            if ( scanf("%d", &temp->rok_produkcji) != 1 )
+            {
+                error();
+            }
+            else if (temp->rok_produkcji > 1800)
+            {
+                printf("\npodaj kształt gitary:  ");
+                if ( scanf("%19s", temp->budowa) != 1 )
+                {
+                    error();
+                }
+                else
+                {
+                    printf("\npoprawdnie dodano nową gitarę\n");
+                    lista = push(lista, temp);
+                    numeruj(lista);
+                    dzialaj = TAK;
+                }
+            }
+            else printf("złe dane\n");
+        }
+        else printf("złe dane\n");
+    }
+    if (dzialaj == NIE)
+    {
+        free(temp);
+    }
+    return lista;
+}
 
 element *edytuj(element* lista)
 {
@@ -95,6 +147,7 @@ element *edytuj(element* lista)
     }
     return lista; //zwraca wkaźnik do otatniego elementu
 }
+
 void error()
 {
     while((getchar()) != '\n');
@@ -159,6 +212,57 @@ element *losuj(element *lista)
         }
     }
     return lista;
+}
+
+void numeruj(element *lista)
+{
+    int licznik=0;
+    if(lista!=NULL)
+    {
+        while(lista->prior != NULL) //cofniecie sie na poczatek lissty
+            lista = lista->prior;
+        do
+        {
+            licznik++;
+            lista->numer=licznik;
+            lista=lista->next;
+        }
+        while(lista!=NULL);
+    }
+}
+
+element *push(element *first, element *newone)
+{
+    element *temp=first;
+    if(first==NULL)
+    {
+        newone->prior = NULL;
+        return newone;
+    }
+
+
+    while(temp->next!=NULL)
+    {
+        temp->next->prior = temp;
+        temp = temp->next;
+    }
+    newone->prior = temp;
+    temp->next=newone;
+
+    return first; //zwraca wskaźnik do ostatniego elementu!!
+}
+
+element * usun(element *first)
+{
+    if(first==NULL)
+    {
+        printf("\nlista juz jest pusta\n");
+        return NULL;
+    }
+
+    usun(first->next);
+    free(first);
+    return NULL;
 }
 
 element *usun_wybrany(element *lista)
@@ -252,148 +356,6 @@ element *usun_wybrany(element *lista)
     return lista; //zwraca wkaźnik do otatniego elementu
 }
 
-element *dodaj(element *lista)
-{
-    int dzialaj = NIE;
-
-    element *temp=NULL;
-    temp = (element*)malloc(sizeof(element));
-
-    printf("\npodaj markę gitary do załadowania do bazy:  ");
-    if ( scanf("%19s", temp->marka) != 1 )
-    {
-        error();
-    }
-    else
-    {
-        printf("\nrodzaj gitary: 1-elektryczna, 2-akustyczna, 3-basowa:  ");
-        if ( scanf("%d", &temp->rodzaj) != 1 )
-        {
-            error();
-        }
-        else if ( temp->rodzaj == 1  || temp->rodzaj == 2  ||temp->rodzaj == 3  )
-        {
-            printf("\npodaj rok produkcji:  ");
-            if ( scanf("%d", &temp->rok_produkcji) != 1 )
-            {
-                error();
-            }
-            else if (temp->rok_produkcji > 1800)
-            {
-                printf("\npodaj kształt gitary:  ");
-                if ( scanf("%19s", temp->budowa) != 1 )
-                {
-                    error();
-                }
-                else
-                {
-                    printf("\npoprawdnie dodano nową gitarę\n");
-                    lista = push(lista, temp);
-                    numeruj(lista);
-                    dzialaj = TAK;
-                }
-            }
-            else printf("złe dane\n");
-        }
-        else printf("złe dane\n");
-    }
-    if (dzialaj == NIE)
-    {
-        free(temp);
-    }
-    return lista;
-}
-
-void numeruj(element *lista)
-{
-    int licznik=0;
-    if(lista!=NULL)
-    {
-        while(lista->prior != NULL) //cofniecie sie na poczatek lissty
-            lista = lista->prior;
-        do
-        {
-            licznik++;
-            lista->numer=licznik;
-            lista=lista->next;
-        }
-        while(lista!=NULL);
-    }
-}
-
-element *push(element *first, element *newone)
-{
-    element *temp=first;
-    if(first==NULL)
-    {
-        newone->prior = NULL;
-        return newone;
-    }
-
-
-    while(temp->next!=NULL)
-    {
-        temp->next->prior = temp;
-        temp = temp->next;
-    }
-    newone->prior = temp;
-    temp->next=newone;
-
-    return first; //zwraca wskaźnik do ostatniego elementu!!
-}
-
-element * usun(element *first)
-{
-    if(first==NULL)
-    {
-        printf("\nlista juz jest pusta\n");
-        return NULL;
-    }
-
-    usun(first->next);
-    free(first);
-    return NULL;
-}
-
-void zapisz_do_pliku(element *lista)
-{
-    if(lista != NULL)
-    {
-        char nazwa[MAXNAZWA];
-        printf("\npodaj nazwę pliku(bez rozszerzenia):  ");
-        if ( scanf("%16s", nazwa) != 1 )
-        {
-            error();
-        }
-        else
-        {
-            strcat(nazwa, ".jt");
-            FILE *pFile;
-            pFile=fopen(nazwa, "wb");
-            if(pFile == NULL)
-            {
-                perror("\nbłąd otwarcia pliku\n");
-            }
-            else
-            {
-                while(lista->prior != NULL)
-                    lista = lista->prior; //cofanie na sam początek w razie co
-                while(lista != NULL)
-                {
-                    fwrite(&lista->rok_produkcji, sizeof(int), 1 , pFile );
-                    fwrite(&lista->rodzaj, sizeof(int), 1 , pFile );
-                    fwrite(lista->marka, MAXNAZWA*sizeof(char), 1,  pFile);
-                    fwrite(lista->budowa, MAXNAZWA*sizeof(char), 1,  pFile);
-                    lista = lista->next;
-                }
-                printf("poprawnie zapisano listę\n");
-
-                fclose(pFile);
-            }
-        }
-    }
-    else printf("lista jest pusta\n");
-}
 element * wczytaj_z_pliku(element *lista)
 {
     char nazwa[MAXNAZWA];
@@ -446,6 +408,46 @@ element * wczytaj_z_pliku(element *lista)
         }
     }
     return lista;
+}
+
+void zapisz_do_pliku(element *lista)
+{
+    if(lista != NULL)
+    {
+        char nazwa[MAXNAZWA];
+        printf("\npodaj nazwę pliku(bez rozszerzenia):  ");
+        if ( scanf("%16s", nazwa) != 1 )
+        {
+            error();
+        }
+        else
+        {
+            strcat(nazwa, ".jt");
+            FILE *pFile;
+            pFile=fopen(nazwa, "wb");
+            if(pFile == NULL)
+            {
+                perror("\nbłąd otwarcia pliku\n");
+            }
+            else
+            {
+                while(lista->prior != NULL)
+                    lista = lista->prior; //cofanie na sam początek w razie co
+                while(lista != NULL)
+                {
+                    fwrite(&lista->rok_produkcji, sizeof(int), 1 , pFile );
+                    fwrite(&lista->rodzaj, sizeof(int), 1 , pFile );
+                    fwrite(lista->marka, MAXNAZWA*sizeof(char), 1,  pFile);
+                    fwrite(lista->budowa, MAXNAZWA*sizeof(char), 1,  pFile);
+                    lista = lista->next;
+                }
+                printf("poprawnie zapisano listę\n");
+
+                fclose(pFile);
+            }
+        }
+    }
+    else printf("lista jest pusta\n");
 }
 
 #endif // ODCZYT_H_INCLUDED

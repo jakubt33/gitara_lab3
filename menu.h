@@ -13,12 +13,9 @@
 void menu(element *lista);
 void podpis();
 void wyswietl(element *);
-void zapisz1(element *lista);
-void zapisz2(element * lista, int polecenie, char *);
 
 #include "odczyt.h"
 #include "edycja.h"
-
 
 
 void menu(element *lista)
