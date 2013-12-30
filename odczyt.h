@@ -173,6 +173,7 @@ element *usun_wybrany(element *lista)
         }
         else
         {
+
             //printf("numer na wejciu to %d\n", lista->numer);
             if(lista->numer>do_usuniecia)
                 while(do_usuniecia != lista->numer && lista->prior != NULL)
@@ -184,40 +185,62 @@ element *usun_wybrany(element *lista)
 
             if(lista->numer == do_usuniecia)
             {
-                if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme
+                printf("czy napewno chcesz usunąć wybraną pozycję? 1 - Tak, 2 - Nie\n");
+                printf("--------------------------------------------------------------------\n"
+                       "Lp.\trok\t\tmarka\trodzaj\t\tkształt\n");
+                printf("%4d.\t%d %16s\t", lista->numer, lista->rok_produkcji, lista->marka);
+                if(lista->rodzaj == 1)       printf("elektryczna\t");
+                else if(lista->rodzaj == 2)  printf("akustyczna \t");
+                else if(lista->rodzaj == 3)  printf("basowa     \t");
+                printf("%s\n", lista->budowa);
+
+                int tak_nie = 0;
+                if ( scanf("%d", &tak_nie) != 1 )
                 {
-                    element *temp = lista->prior;
+                    error();
+                }
+                else if(tak_nie == 1)
+                {
 
-                    lista = lista->next;
 
-                    free(lista->prior);
+                    if(lista->prior != NULL && lista->next != NULL) //obejmuje wszytkie środkowyme
+                    {
+                        element *temp = lista->prior;
 
-                    lista->prior = temp; //o jeden do tylu
-                    temp->next = lista;
+                        lista = lista->next;
+
+                        free(lista->prior);
+
+                        lista->prior = temp; //o jeden do tylu
+                        temp->next = lista;
+
+
+                    }
+                    else if(lista->prior == NULL && lista->next != NULL) //pierwsza
+                    {
+                        lista = lista->next; //do przodu o jeden
+                        lista->prior->next = NULL; //pierwszy juz nie wskazuje na drugi
+                        free(lista->prior); //usuniecie pierwszego
+                        lista->prior = NULL; //nowy pierwszy wskazuje na null w prior
+
+                    }
+                    else if(lista->prior != NULL && lista->next == NULL) //ostatnia
+                    {
+                        lista = lista->prior; //cofam ie ojednen
+                        lista->next->prior = NULL; //pozbycie sie swiadkow, alienacja ostatniego elementu
+                        free(lista->next);
+                        lista->next = NULL;
+                    }
+                    else if(lista->prior == NULL && lista->next == NULL) //w bazie tylko jeden rekord
+                    {
+                        lista = usun(lista);
+                    }
+                    numeruj(lista);
+
 
 
                 }
-                else if(lista->prior == NULL && lista->next != NULL) //pierwsza
-                {
-                    lista = lista->next; //do przodu o jeden
-                    lista->prior->next = NULL; //pierwszy juz nie wskazuje na drugi
-                    free(lista->prior); //usuniecie pierwszego
-                    lista->prior = NULL; //nowy pierwszy wskazuje na null w prior
-
-                }
-                else if(lista->prior != NULL && lista->next == NULL) //ostatnia
-                {
-                    lista = lista->prior; //cofam ie ojednen
-                    lista->next->prior = NULL; //pozbycie sie swiadkow, alienacja ostatniego elementu
-                    free(lista->next);
-                    lista->next = NULL;
-                }
-                else if(lista->prior == NULL && lista->next == NULL) //w bazie tylko jeden rekord
-                {
-                    lista = usun(lista);
-                }
-                numeruj(lista);
-
+                else printf("powrót do menu głównego\n");
             }
             else
                 printf("brak gitary o wkazanym numerze\n");
@@ -229,6 +252,9 @@ element *usun_wybrany(element *lista)
             }
         }
     }
+
+    else printf("lista jest już pusta\n");
+
     return lista; //zwraca wkaźnik do otatniego elementu
 }
 
@@ -429,4 +455,5 @@ element * wczytaj_z_pliku(element *lista)
 }
 
 #endif // ODCZYT_H_INCLUDED
+
 

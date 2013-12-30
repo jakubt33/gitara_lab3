@@ -8,7 +8,7 @@ void sortuj_marka(element*);
 void sortuj_budowa(element *);
 element * szukaj(element *, element*);
 
-element * szukaj(element *lista, element *szukaj_lista) //sprawdzic zabezpieczina //dwa razi sie zrobi i sie piepszy
+element * szukaj(element *lista, element *szukaj_lista) //sprawdzic zabezpieczina
 {
     if(lista != NULL)
     {
