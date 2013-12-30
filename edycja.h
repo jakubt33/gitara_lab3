@@ -29,6 +29,7 @@ element * szukaj_budowa(element *lista, element *szukaj_lista) //sprawdzic zabez
             int koniec = NIE;
             while(koniec == NIE) //dla kazdego elementu z listy
             {
+                int last_number = 0;
                 if(strlen(nazwa)<=strlen(lista->budowa))
                 {
                     int licznik_1=0;
@@ -45,7 +46,9 @@ element * szukaj_budowa(element *lista, element *szukaj_lista) //sprawdzic zabez
 
                         if(strcmp(temp_nazwa, nazwa) == 0)
                         {
-                            element *temp = NULL;
+                            if(last_number != lista->numer)
+                            {
+                                element *temp = NULL;
                             temp = (element*)malloc(sizeof(element));
 
                             temp->rodzaj = lista->rodzaj;
@@ -56,7 +59,10 @@ element * szukaj_budowa(element *lista, element *szukaj_lista) //sprawdzic zabez
                             temp->next = NULL;
                             temp->prior = NULL;
                             szukaj_lista = push(szukaj_lista, temp);
+
+                            last_number = lista->numer; //zapisuje w tym jaki numer poprzednio został wgrany
                             //printf("pasue\n"); fajne do debugowaina ;D
+                            }
                         }
 
                     }
@@ -93,6 +99,7 @@ element * szukaj_marka(element *lista, element *szukaj_lista) //sprawdzic zabezp
             int koniec = NIE;
             while(koniec == NIE) //dla kazdego elementu z listy
             {
+                int last_number = 0;
                 if(strlen(nazwa)<=strlen(lista->marka))
                 {
                     int licznik_1=0;
@@ -109,7 +116,9 @@ element * szukaj_marka(element *lista, element *szukaj_lista) //sprawdzic zabezp
 
                         if(strcmp(temp_nazwa, nazwa) == 0)
                         {
-                            element *temp = NULL;
+                            if(last_number != lista->numer) //wyklucza ponowne dodanie tego samego rekordu
+                            {
+                                element *temp = NULL;
                             temp = (element*)malloc(sizeof(element));
 
                             temp->rodzaj = lista->rodzaj;
@@ -120,7 +129,12 @@ element * szukaj_marka(element *lista, element *szukaj_lista) //sprawdzic zabezp
                             temp->next = NULL;
                             temp->prior = NULL;
                             szukaj_lista = push(szukaj_lista, temp);
+
+                            last_number = lista->numer; //zapisuje w tym jaki numer poprzednio został wgrany
+
                             //printf("pasue\n"); fajne do debugowaina ;D
+                            }
+
                         }
 
                     }
