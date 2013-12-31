@@ -371,7 +371,7 @@ element * wczytaj_z_pliku(element *lista)
         pFile=fopen(nazwa, "rb");
         if(pFile == NULL)
         {
-            perror("\nbłąd otwarcia pliku\n");
+            perror("błąd otwarcia pliku\n");
         }
         else
         {
@@ -423,8 +423,24 @@ element * wczytaj_z_pliku(element *lista)
                 {
                     if(wybor == 1)
                     {
-                        lista = push(lista, temp_lista);
-                        temp_lista = temp_lista->next;
+                        while(temp_lista != NULL)
+                        {
+                            element *t_element = NULL;
+                            t_element = (element*)malloc(sizeof(element));
+
+                            //kopiowanie danych
+                            t_element->rodzaj = temp_lista->rodzaj;
+                            t_element->numer = temp_lista->numer;
+                            t_element->rok_produkcji = temp_lista->rok_produkcji;
+                            strncpy( t_element->budowa, temp_lista->budowa, MAXNAZWA-1);
+                            strncpy( t_element->marka, temp_lista->marka, MAXNAZWA-1);
+                            t_element->next = NULL;
+                            t_element->prior = NULL;
+
+                            lista = push(lista, t_element);
+
+                            temp_lista = temp_lista->next;
+                        }
                     }
                     else if(wybor == 2)
                     {
@@ -456,6 +472,7 @@ element * wczytaj_z_pliku(element *lista)
                                     t_element = (element*)malloc(sizeof(element));
 
                                     t_element->rodzaj = temp_lista->rodzaj;
+                                    t_element->numer = temp_lista->numer;
                                     t_element->rok_produkcji = temp_lista->rok_produkcji;
                                     strncpy( t_element->budowa, temp_lista->budowa, MAXNAZWA-1);
                                     strncpy( t_element->marka, temp_lista->marka, MAXNAZWA-1);
@@ -475,6 +492,7 @@ element * wczytaj_z_pliku(element *lista)
                     else printf("powrót do menu\n");
                 }
             }
+            temp_lista = usun(temp_lista);
         }
     }
     return lista;
