@@ -428,37 +428,57 @@ element * wczytaj_z_pliku(element *lista)
                     }
                     else if(wybor == 2)
                     {
-                       // int koniec = NIE;
-                        printf("podaj numer gitary którą chcesz dodać (0-zakończ dodawanie, -1 - wyswietl możliwości): ");
-
-                        int wybor2=0;
-                        if( scanf("%d", &wybor2) != 1)
+                        int koniec = NIE;
+                        while(koniec == NIE) //tu sas dodawane kolejne giatry
                         {
-                            error();
+                            printf("podaj numer gitary którą chcesz dodać ('0'-zakończ dodawanie,'-1'-wyswietl możliwości): ");
+                            int wybor2=0;
+                            if( scanf("%d", &wybor2) != 1)
+                            {
+                                error();
+                            }
+                            else
+                            {
+                                if(wybor2 == -1)
+                                {
+                                    wyswietl(temp_lista);
+                                }
+                                else if(wybor2 == 0)
+                                {
+                                    koniec = TAK;
+                                }
+                                else
+                                {
+                                    while(temp_lista->numer != wybor2 || temp_lista->next == NULL)
+                                        temp_lista = temp_lista->next;
+
+                                    element *t_element = NULL;
+                                    t_element = (element*)malloc(sizeof(element));
+
+                                    t_element->rodzaj = temp_lista->rodzaj;
+                                    t_element->rok_produkcji = temp_lista->rok_produkcji;
+                                    strncpy( t_element->budowa, temp_lista->budowa, MAXNAZWA-1);
+                                    strncpy( t_element->marka, temp_lista->marka, MAXNAZWA-1);
+                                    t_element->next = NULL;
+                                    t_element->prior = NULL;
+
+                                    wyswietl(t_element);
+
+                                    lista = push(lista, t_element);
+
+                                    while(temp_lista->prior != NULL)
+                                        temp_lista=temp_lista->prior;//cofniecie sie na poczatek
+                                }
+                            }
                         }
-                        else
-                        {
-                            while(temp_lista->numer != wybor2 || temp_lista->next == NULL)
-                                temp_lista = temp_lista->next;
-
-                            element *t_element = temp_lista;
-                            t_element->next = NULL;
-                            t_element->prior = NULL;
-
-                            lista = push(lista, t_element);
-                        }
-
                     }
-                    else printf("fs\n");
-
+                    else printf("powrót do menu\n");
                 }
             }
-
         }
     }
     return lista;
 }
-
 void zapisz_do_pliku(element *lista)
 {
     if(lista != NULL)
@@ -500,5 +520,7 @@ void zapisz_do_pliku(element *lista)
 }
 
 #endif // ODCZYT_H_INCLUDED
+
+
 
 
