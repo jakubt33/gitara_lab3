@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="edycja.h" open="1" top="1" tabpos="5">
-		<Cursor position="543" topLine="0" />
+	<File name="edycja.h" open="1" top="0" tabpos="5">
+		<Cursor position="1257" topLine="24" />
 	</File>
 	<File name="init.h" open="1" top="0" tabpos="2">
 		<Cursor position="267" topLine="0" />
 	</File>
 	<File name="main.c" open="1" top="0" tabpos="1">
-		<Cursor position="96" topLine="0" />
+		<Cursor position="258" topLine="0" />
 	</File>
 	<File name="menu.h" open="1" top="0" tabpos="3">
-		<Cursor position="2126" topLine="100" />
+		<Cursor position="1123" topLine="36" />
 	</File>
-	<File name="odczyt.h" open="1" top="0" tabpos="4">
-		<Cursor position="12335" topLine="10" />
+	<File name="odczyt.h" open="1" top="1" tabpos="4">
+		<Cursor position="13515" topLine="404" />
 	</File>
 </CodeBlocks_layout_file>

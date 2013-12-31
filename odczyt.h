@@ -375,6 +375,8 @@ element * wczytaj_z_pliku(element *lista)
         }
         else
         {
+            element *temp_lista = NULL;
+
             int czy_dzialac = TAK;
             while(feof(pFile) == 0 && czy_dzialac == TAK)
             {
@@ -393,7 +395,7 @@ element * wczytaj_z_pliku(element *lista)
                     {
                         temp->prior = NULL;
                         temp->next = NULL;
-                        lista = push(lista, temp);
+                        temp_lista = push(temp_lista, temp);
                     }
                     else
                     {
@@ -402,9 +404,56 @@ element * wczytaj_z_pliku(element *lista)
                     }
                 }
             }
-            if(czy_dzialac == TAK)
-                printf("poprawnie wczytano listę\n");
             fclose(pFile);
+
+            if(czy_dzialac == TAK)
+            {
+                numeruj(temp_lista);
+                printf("poprawnie wczytano listę\n");
+                wyswietl(temp_lista);
+
+                int wybor = 0;
+                printf("czy dodać wszytkie do listy czy tylko wybrane? 1-Wszystkie, 2-Wybrane\n");
+
+                if( scanf("%d", &wybor) != 1)
+                {
+                    error();
+                }
+                else
+                {
+                    if(wybor == 1)
+                    {
+                        lista = push(lista, temp_lista);
+                        temp_lista = temp_lista->next;
+                    }
+                    else if(wybor == 2)
+                    {
+                       // int koniec = NIE;
+                        printf("podaj numer gitary którą chcesz dodać (0-zakończ dodawanie, -1 - wyswietl możliwości): ");
+
+                        int wybor2=0;
+                        if( scanf("%d", &wybor2) != 1)
+                        {
+                            error();
+                        }
+                        else
+                        {
+                            while(temp_lista->numer != wybor2 || temp_lista->next == NULL)
+                                temp_lista = temp_lista->next;
+
+                            element *t_element = temp_lista;
+                            t_element->next = NULL;
+                            t_element->prior = NULL;
+
+                            lista = push(lista, t_element);
+                        }
+
+                    }
+                    else printf("fs\n");
+
+                }
+            }
+
         }
     }
     return lista;
