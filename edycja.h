@@ -1,7 +1,6 @@
 #ifndef EDYCJA_H_INCLUDED
 #define EDYCJA_H_INCLUDED
 
-void sortuj(element *);
 void sortuj_budowa(element *);
 void sortuj_marka(element*);
 void sortuj_rocznik(element*);
@@ -11,54 +10,6 @@ element * szukaj_marka(element *, element*);
 element * szukaj_rocznik(element *, element*);
 element * szukaj_rodzaj(element *, element*);
 
-
-void sortuj(element *lista)
-{
-    if(lista != NULL)
-    {
-        printf("\npo jakim elemencie posortować? 1-rocznik, 2-marka, 3-rodzaj, 4-budowa:  ");
-        int wybor=0;
-        if ( scanf("%d", &wybor) != 1 )
-        {
-            error();
-        }
-        else
-        {
-            switch (wybor)
-            {
-            case 1:
-            {
-                sortuj_rocznik(lista);
-                numeruj(lista);
-                break;
-            }
-            case 2:
-            {
-                sortuj_marka(lista);
-                numeruj(lista);
-                break;
-            }
-            case 3:
-            {
-                sortuj_rodzaj(lista);
-                numeruj(lista);
-                break;
-            }
-            case 4:
-            {
-                sortuj_budowa(lista);
-                numeruj(lista);
-                break;
-            }
-            default:
-                printf("zła komenda\n");
-                break;
-            }
-        }
-    }
-    else
-        printf("brak gitar w bazie\n");
-}
 
 void sortuj_budowa(element *lista)
 {

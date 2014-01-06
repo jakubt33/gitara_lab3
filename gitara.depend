@@ -3,7 +3,7 @@
 	<stdio.h>
 	"menu.h"
 
-1389034288 /home/kuba/github/gitara_lab3/menu.h
+1389036301 /home/kuba/github/gitara_lab3/menu.h
 	<stdlib.h>
 	<string.h>
 	<time.h>
@@ -15,5 +15,5 @@
 
 1389033217 /home/kuba/github/gitara_lab3/odczyt.h
 
-1389034329 /home/kuba/github/gitara_lab3/edycja.h
+1389036404 /home/kuba/github/gitara_lab3/edycja.h
 

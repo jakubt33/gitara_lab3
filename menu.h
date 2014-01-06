@@ -33,7 +33,10 @@ void menu(element *lista)
                "-------------------\n"
                "2 - Wyswietl bazę gitar\n"
                "-------------------\n"
-               "31 - Sortuj po ...\n"
+               "31 - Sortuj po roku produkcji\n"
+               "32 - Sortuj po nazwie marki\n"
+               "33 - Sortuj po rodzaju\n"
+               "34 - Sortuj po budowie\n"
                "-------------------\n"
                "41 - Wyszukaj w nazwie marki\n"
                "42 - Wyszukaj w rodzaju budowy\n"
@@ -84,7 +87,26 @@ void menu(element *lista)
             }
             case 31:
             {
-                sortuj(lista);
+                sortuj_rocznik(lista);
+                numeruj(lista);
+                break;
+            }
+            case 32:
+            {
+                sortuj_marka(lista);
+                numeruj(lista);
+                break;
+            }
+            case 33:
+            {
+                sortuj_rodzaj(lista);
+                numeruj(lista);
+                break;
+            }
+            case 34:
+            {
+                sortuj_budowa(lista);
+                numeruj(lista);
                 break;
             }
             case 41:
