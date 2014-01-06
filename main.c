@@ -12,5 +12,3 @@ int main()
     podpis();
     return 0;
 }
-//dorobic zabezpieczenie przed za dlugimi nazwami
-//wyszukiwanie po innych cechach

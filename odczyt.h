@@ -256,7 +256,6 @@ element * usun(element *first)
 {
     if(first==NULL)
     {
-        printf("\nlista juz jest pusta\n");
         return NULL;
     }
 
@@ -497,6 +496,7 @@ element * wczytaj_z_pliku(element *lista)
     }
     return lista;
 }
+
 void zapisz_do_pliku(element *lista)
 {
     if(lista != NULL)

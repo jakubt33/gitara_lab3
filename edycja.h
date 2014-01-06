@@ -8,7 +8,8 @@ void sortuj_rocznik(element*);
 void sortuj_rodzaj(element*);
 element * szukaj_budowa(element *, element*);
 element * szukaj_marka(element *, element*);
-
+element * szukaj_rocznik(element *, element*);
+element * szukaj_rodzaj(element *, element*);
 
 
 void sortuj(element *lista)
@@ -49,6 +50,9 @@ void sortuj(element *lista)
                 numeruj(lista);
                 break;
             }
+            default:
+                printf("zła komenda\n");
+                break;
             }
         }
     }
@@ -200,11 +204,11 @@ void sortuj_rodzaj(element *lista)
     }
 }
 
-element * szukaj_budowa(element *lista, element *szukaj_lista) //sprawdzic zabezpieczina
+element * szukaj_budowa(element *lista, element *szukaj_lista)
 {
     if(lista != NULL)
     {
-        while(lista->prior != NULL)
+        while(lista->prior != NULL) //upewnieine sie że pracujemy na pierwszym elemencie listy
             lista = lista->prior;
 
         printf("\nwpisz poszukiwaną frazę(w budowie):");
@@ -240,19 +244,19 @@ element * szukaj_budowa(element *lista, element *szukaj_lista) //sprawdzic zabez
                             if(last_number != lista->numer)
                             {
                                 element *temp = NULL;
-                            temp = (element*)malloc(sizeof(element));
+                                temp = (element*)malloc(sizeof(element));
 
-                            temp->rodzaj = lista->rodzaj;
-                            temp->rok_produkcji = lista->rok_produkcji;
-                            temp->numer = lista->numer;
-                            strncpy( temp->budowa, lista->budowa, MAXNAZWA-1);
-                            strncpy( temp->marka, lista->marka, MAXNAZWA-1);
-                            temp->next = NULL;
-                            temp->prior = NULL;
-                            szukaj_lista = push(szukaj_lista, temp);
+                                temp->rodzaj = lista->rodzaj;
+                                temp->rok_produkcji = lista->rok_produkcji;
+                                temp->numer = lista->numer;
+                                strncpy( temp->budowa, lista->budowa, MAXNAZWA-1);
+                                strncpy( temp->marka, lista->marka, MAXNAZWA-1);
+                                temp->next = NULL;
+                                temp->prior = NULL;
+                                szukaj_lista = push(szukaj_lista, temp);
 
-                            last_number = lista->numer; //zapisuje w tym jaki numer poprzednio został wgrany
-                            //printf("pasue\n"); fajne do debugowaina ;D
+                                last_number = lista->numer; //zapisuje w tym jaki numer poprzednio został wgrany
+                                //printf("pasue\n"); fajne do debugowaina ;D
                             }
                         }
 
@@ -271,7 +275,7 @@ element * szukaj_budowa(element *lista, element *szukaj_lista) //sprawdzic zabez
     return szukaj_lista;
 }
 
-element * szukaj_marka(element *lista, element *szukaj_lista) //sprawdzic zabezpieczina
+element * szukaj_marka(element *lista, element *szukaj_lista)
 {
     if(lista != NULL)
     {
@@ -311,20 +315,20 @@ element * szukaj_marka(element *lista, element *szukaj_lista) //sprawdzic zabezp
                             if(last_number != lista->numer) //wyklucza ponowne dodanie tego samego rekordu
                             {
                                 element *temp = NULL;
-                            temp = (element*)malloc(sizeof(element));
+                                temp = (element*)malloc(sizeof(element));
 
-                            temp->rodzaj = lista->rodzaj;
-                            temp->rok_produkcji = lista->rok_produkcji;
-                            temp->numer = lista->numer;
-                            strncpy( temp->marka, lista->marka, MAXNAZWA-1);
-                            strncpy( temp->budowa, lista->budowa, MAXNAZWA-1);
-                            temp->next = NULL;
-                            temp->prior = NULL;
-                            szukaj_lista = push(szukaj_lista, temp);
+                                temp->rodzaj = lista->rodzaj;
+                                temp->rok_produkcji = lista->rok_produkcji;
+                                temp->numer = lista->numer;
+                                strncpy( temp->marka, lista->marka, MAXNAZWA-1);
+                                strncpy( temp->budowa, lista->budowa, MAXNAZWA-1);
+                                temp->next = NULL;
+                                temp->prior = NULL;
+                                szukaj_lista = push(szukaj_lista, temp);
 
-                            last_number = lista->numer; //zapisuje w tym jaki numer poprzednio został wgrany
+                                last_number = lista->numer; //zapisuje w tym jaki numer poprzednio został wgrany
 
-                            //printf("pasue\n"); fajne do debugowaina ;D
+                                //printf("pasue\n"); fajne do debugowaina ;D
                             }
 
                         }
@@ -338,6 +342,116 @@ element * szukaj_marka(element *lista, element *szukaj_lista) //sprawdzic zabezp
             }
             wyswietl(szukaj_lista);
 
+        }
+
+    }
+    return szukaj_lista;
+}
+
+element * szukaj_rocznik(element *lista, element *szukaj_lista)
+{
+    if(lista != NULL)
+    {
+        while(lista->prior != NULL)
+            lista = lista->prior;
+
+        printf("\nwpisz poszukiwany rocznik:");
+        int rocznik = 0;
+        if ( scanf("%d", &rocznik) != 1 )
+        {
+            error();
+        }
+        else
+        {
+            printf("po wyjściu z tej opcji wyszukane rekordy zostaną usunięte z tymczasowego bufora\n");
+            int koniec = NIE;
+            while(koniec == NIE) //dla kazdego elementu z listy
+            {
+                int last_number = 0;
+
+                if(rocznik == lista->rok_produkcji)
+                {
+                    if(last_number != lista->numer) //wyklucza ponowne dodanie tego samego rekordu
+                    {
+                        element *temp = NULL;
+                        temp = (element*)malloc(sizeof(element));
+
+                        temp->rodzaj = lista->rodzaj;
+                        temp->rok_produkcji = lista->rok_produkcji;
+                        temp->numer = lista->numer;
+                        strncpy( temp->marka, lista->marka, MAXNAZWA-1);
+                        strncpy( temp->budowa, lista->budowa, MAXNAZWA-1);
+                        temp->next = NULL;
+                        temp->prior = NULL;
+                        szukaj_lista = push(szukaj_lista, temp);
+
+                        last_number = lista->numer; //zapisuje w tym jaki numer poprzednio został wgrany
+
+                        //printf("pasue\n"); fajne do debugowaina ;D
+                    }
+
+                }
+                if(lista->next == NULL)
+                    koniec = TAK;
+                else
+                    lista = lista->next;
+            }
+            wyswietl(szukaj_lista);
+        }
+
+    }
+    return szukaj_lista;
+}
+
+element * szukaj_rodzaj(element *lista, element *szukaj_lista)
+{
+    if(lista != NULL)
+    {
+        while(lista->prior != NULL)
+            lista = lista->prior;
+
+        printf("\nwpisz poszukiwany rodzaj, 1-elektryk, 2-akustyk, 3-bas:");
+        int rodzaj = 0;
+        if ( scanf("%d", &rodzaj) != 1 )
+        {
+            error();
+        }
+        else
+        {
+            printf("po wyjściu z tej opcji wyszukane rekordy zostaną usunięte z tymczasowego bufora\n");
+            int koniec = NIE;
+            while(koniec == NIE) //dla kazdego elementu z listy
+            {
+                int last_number = 0;
+
+                if(rodzaj == lista->rodzaj)
+                {
+                    if(last_number != lista->numer) //wyklucza ponowne dodanie tego samego rekordu
+                    {
+                        element *temp = NULL;
+                        temp = (element*)malloc(sizeof(element));
+
+                        temp->rodzaj = lista->rodzaj;
+                        temp->rok_produkcji = lista->rok_produkcji;
+                        temp->numer = lista->numer;
+                        strncpy( temp->marka, lista->marka, MAXNAZWA-1);
+                        strncpy( temp->budowa, lista->budowa, MAXNAZWA-1);
+                        temp->next = NULL;
+                        temp->prior = NULL;
+                        szukaj_lista = push(szukaj_lista, temp);
+
+                        last_number = lista->numer; //zapisuje w tym jaki numer poprzednio został wgrany
+
+                        //printf("pasue\n"); fajne do debugowaina ;D
+                    }
+
+                }
+                if(lista->next == NULL)
+                    koniec = TAK;
+                else
+                    lista = lista->next;
+            }
+            wyswietl(szukaj_lista);
         }
 
     }

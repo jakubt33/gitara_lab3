@@ -37,6 +37,8 @@ void menu(element *lista)
                "-------------------\n"
                "41 - Wyszukaj w nazwie marki\n"
                "42 - Wyszukaj w rodzaju budowy\n"
+               "43 - Wyszukaj wskazany rocznik produkcji\n"
+               "44 - Wyszukaj wskazany rodzaj\n"
                "-------------------\n"
                "5 - Zapisz\n"
                "6 - Wyjdź\n");
@@ -96,6 +98,20 @@ void menu(element *lista)
             {
                 element *szukaj_lista=NULL;
                 szukaj_lista = szukaj_budowa(lista, szukaj_lista);
+                szukaj_lista = usun(szukaj_lista);
+                break;
+            }
+            case 43:
+            {
+                element *szukaj_lista=NULL;
+                szukaj_lista = szukaj_rocznik(lista, szukaj_lista);
+                szukaj_lista = usun(szukaj_lista);
+                break;
+            }
+            case 44:
+            {
+                element *szukaj_lista=NULL;
+                szukaj_lista = szukaj_rodzaj(lista, szukaj_lista);
                 szukaj_lista = usun(szukaj_lista);
                 break;
             }

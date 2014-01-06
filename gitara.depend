@@ -1,9 +1,9 @@
 # depslib dependency file v1.0
-1388323284 source:/home/kuba/github/gitara_lab3/main.c
+1389033262 source:/home/kuba/github/gitara_lab3/main.c
 	<stdio.h>
 	"menu.h"
 
-1388426745 /home/kuba/github/gitara_lab3/menu.h
+1389034288 /home/kuba/github/gitara_lab3/menu.h
 	<stdlib.h>
 	<string.h>
 	<time.h>
@@ -13,7 +13,7 @@
 
 1388323103 /home/kuba/github/gitara_lab3/init.h
 
-1388451237 /home/kuba/github/gitara_lab3/odczyt.h
+1389033217 /home/kuba/github/gitara_lab3/odczyt.h
 
-1388426633 /home/kuba/github/gitara_lab3/edycja.h
+1389034329 /home/kuba/github/gitara_lab3/edycja.h
 
