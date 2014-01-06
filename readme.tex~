@@ -1,0 +1,81 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+
+\usepackage{polski}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\title{Programowanie w C}
+\author{Jakub Trzyna}
+\date{04.01.2014}
+
+\pdfinfo{
+  /Title    (readme.pdf)
+  /Author   (Jakub Trzyna)
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+ Dokument przedstawia opis działania programu napisanego jako trzeci projekt na zajęcia z programowania w języku C.
+ Program umożliwia dodawanie, usuwanie, edycję oraz wyświetlanie bazy gitar.
+\end{abstract}
+
+\section{Dodawanie/Usuwanie/Edytowanie gitary}
+\begin{enumerate}
+\item Dodawać nowe gitary można poprzez użycie opcji:
+\begin{itemize}
+\item>>11<< załadowanie wskazanych/wszystkich elementów z pliku binarnego o rozszezrzeniu .jt. Rozszerzenie jest automatycznie dodawane przez program, wiec użytkownik musi się martwić tylko o poprawną nazwę pliku.
+\item>>12<< utworzenie nowego elementu o parametrach wybranych przez użytkownika
+\item>>13<< wygenerowanie dowolnej, wskazanej ilości losowych gitar.
+Funkcja losująca posiada w bazie kilka marek, typów budów i rodzajów z 
+których losuje pojednyncze elementy przyporządkowując je do tworzonej gitary.
+\end{itemize}
+
+\item Aby usunąć konkretną gitarę z bazy należy wybrać opcję >>14<< w menu głównym, a następnie podać numer gitary którą chcemy usunąć.
+\item Edycja parametrów gitary następuje po wybraniu opcji >>15<< z menu głównego. Po wpisaniu numeru gitary, program poprosi o podanie kolejnych parametrów, jednocześnie pokazując w nawiasie dotychczasową wartość.
+\end{enumerate}
+
+\section{Wyświetlanie listy gitar}
+ Funkcja >>2<< umożliwia wyświetlenie wszystkich gitar wraz z ich parametrami które znajdują sie w bazie. 
+
+ \section{Sortowanie}
+ Program umożliwia sortowanie gitar wedle wszystkich parametrów. Należy w tym celu wybrać opcję:
+\begin{itemize}
+\item >>31<< aby posortować po roku pordukcji
+\item >>32<< alfabetycznie po nazwie marki
+\item >>33<< aby posorotwać po rodzaju,
+w porzątku: pierwsze elektryczne, potem akustyczne a na końcu basowe.
+\item >>34<< alfabetycznie po nazwie budowy
+\end{itemize}
+Po wybraniu którejkolwiek opcji gitary zostaną posortowane i
+ponumerowane według nowego porządku.
+Aby wyświetlić efekty sortowania należy wybrać opcję >>2<< w menu głównym.
+
+\section{Wyszukiwanie}
+Program umożliwia wyszukiwanie gitar wedle wszystkich parametrów.
+Należy w tym celu wybrać opcję:
+\begin{itemize}
+\item >>41<< aby wyświetlić tylko te gitary, które zawierają
+poszukiwany fragment tekstu w swojej nazwie marki.
+Np. szukając >>a<< program wyświetli wszystkie gitary,
+które w swojej nazwie marki zawierają literę >>a<<.
+\item >>42<< analogiczna funkcja do >>41<<, wyszukiwanie następuje w rodzaju budowy.
+\item >>43<< wyświetlone zostaną tylko gitary z określonego przez u użytkownika roku produkcji.
+\item >>44<< wyświetlony zostanie tylko jeden z trzech możliwych rodzajów gitar: elektryczne, akustyczne lub basowe.
+\end{itemize}
+Wyszukane gitary są tymczasowo zapisywane do nowej listy, a po wyświetleniu wyszukanych rekordów lista zostaje usunięta a pamięć zwolniona.
+
+\section{Zaspisywanie}
+ Aby zapisać bazę gitar do pliku należy w menu głównym wybrać
+ opcję >>5<<. Program poprosi o podanie nazwy pliku,
+ którą należy podać bez rozszerzenia. 
+ Program automatycznie dopisze do nazwy rozszerzenie .jt 
+ i zapisze bazę w formie bitowej.
+ 
+\section{Kończenie pracy}
+Wyjście z programu następuje po wybraniu opcji >>6<<. 
+Następuje wtedy zwolnienie pamięci oraz zakończenie działania programu.
+
+\end{document}

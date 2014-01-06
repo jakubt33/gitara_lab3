@@ -1,15 +1,15 @@
 Program baza_gitar umożliwia dodawanie, usuwanie, edycję oraz wyświetlanie bazy gitar.
 
-Dodawać nowe gitary można poprzez opcji:
-11) załadowanie wskazanych/wszystkich elementów z pliku binarnego o rozszezrzeniu .jt.
-12) utworzenie nowego elementu o parametrach wybranych przez urzytkownika
-13) wygenerowanie dowolnej, wskazanej ilości losowych gitar. Funkcja losująca posiada w bazie kilka marek, typów budów, rodzajów z których losuje pojednyncze elementy przyporządkowując je tworzonej gitarze.
+Dodawać nowe gitary można poprzez użycie opcji:
+>>11<< załadowanie wskazanych/wszystkich elementów z pliku binarnego o rozszezrzeniu .jt. Rozszerzenie jest automatycznie dodawane przez program, wiec użytkownik musi się martwić tylko o poprawną nazwę pliku.
+>>12<< utworzenie nowego elementu o parametrach wybranych przez użytkownika
+>>13<< wygenerowanie dowolnej, wskazanej ilości losowych gitar. Funkcja losująca posiada w bazie kilka marek, typów budów, rodzajów z których losuje pojednyncze elementy przyporządkowując je tworzonej gitarze.
 
 Aby usunąć konkretną gitarę z bazy należy wybrać opcję >>14<< w menu głównym, a następnie podać numer gitary którą chcemy usunąć.
 
 Edycja parametrów gitary następuje po wybraniu opcji >>15<< z menu głównego. Po wpisaniu numeru gitary, program poprosi o podanie kolejnych parametrów, jednocześnie pokazując w nawiasie dotychczasową wartość.
 
-Funkcja >>2<< umożliwia wyświetlenie wszystkich gitar które znajdują sie w bazie. 
+Funkcja >>2<< umożliwia wyświetlenie wszystkich gitar wraz z ich parametrami które znajdują sie w bazie. 
 
 Program umożliwia sortowanie gitar wedle wszystkich parametrów. Należy w tym celu wybrać opcję:
 >>31<< aby posortować po roku pordukcji
@@ -21,7 +21,7 @@ Po wybraniu którejkolwiek opcji gitary zostaną posortowane i ponumerowane wed�
 Program umożliwia wyszukiwanie gitar wedle wszystkich parametrów. Należy w tym celu wybrać opcję:
 >>41<< aby wyświetlić tylko te gitary które zawierają poszukiwany fragment tekstu w swojej nazwie marki. Np. szukając >>a<< program wyświetli wszystkie gitary które w swojej nazwie marki zawierają literę >>a<<.
 >>42<< analogiczna funkcja do >>41<<, wyszukiwanie następuje w rodzaju budowy.
->>43<< wyświetlone zostaną tylko gitary z określonego przez urzytkownika roku produkcji.
+>>43<< wyświetlone zostaną tylko gitary z określonego przez u użytkownika roku produkcji.
 >>44<< wyświetlony zostanie tylko jeden z trzech możliwych rodzajów gitar: elektryczne, akustyczne lub basowe.
 Wyszukane gitary są tymczasowo zapisywane do nowej listy, a po wyświetleniu wyszukanych rekordów lista zostaje usunięta a pamięć zwolniona.
 
